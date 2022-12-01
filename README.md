@@ -29,6 +29,6 @@ Der Download geschieht per Get-Request. Zunächst wird die Nummer des aktuellste
 
 In PySpark werden zunächst alle heruntergeladenen Daten aus dem HDFS importiert. Da keine Duplikate enthalten sein werden, werden die Daten nur optimiert. Es werden alle Spalten entfernt, die für die Endbenutzung nicht von Nutzen sind. Benötigt werden nur die Spalten "num", "safe_title", "img" und für eine potentielle Erweiterung der Funktionalität "year". Die Ergebnisse werden sowohl partitioniert als CSV-Datei auf dem HDFS gespeichert, als auch per Pandas in einer SQLite Datenbank.
 
-## Beschreibung Websi
+## Beschreibung Website
 
-Als Front
+Als Webserver wird Apache2 verwendet und für das Backend PHP. In PHP wird eine einfache SQL Query abgesetzt, deren Ergebnisse auf der Seite angezeigt werden. Für eine kleine Verschönerung wird Bootstrap eingebunden.
