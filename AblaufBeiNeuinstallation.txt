@@ -1,0 +1,40 @@
+--HOST--
+sudo -i
+apt update
+apt upgrade -y
+apt install -y docker.io
+docker network create --driver bridge bigdatanet
+docker run -dit --name hadoop -p 8088:8088 -p 9870:9870 -p 9864:9864 -p 10000:10000 -p 8032:8032 -p 8030:8030 -p 8031:8031 -p 9000:9000 -p 8888:8888 --net bigdatanet marcelmittelstaedt/spark_base:latest
+docker create volume myVolume
+docker run -dit --name airflow -p 8080:8080 --net bigdatanet -v myVolume:/home/airflow/mnt marcelmittelstaedt/airflow:latest
+--HADOOP--
+docker exec -it hadoop bash
+apt update && apt upgrade -y
+su hadoop
+cd
+start-all.sh
+hadoop fs -mkdir /user/hadoop/xkcd
+hadoop fs -mkdir /user/hadoop/xkcd/raw
+exit
+exit
+--AIRFLOW--
+docker exec -it airflow bash
+apt update && apt upgrade -y
+apt install sqlite3
+pip3 install pathlib pyarrow==0.12.1 pyspark==3.0 asyncio requests
+chmod 777 /home/airflow/mnt/
+su airflow
+cd ~
+mkdir xkcd
+mkdir xkcd/raw
+cd mnt
+sqlite3 xkcd.db
+.tables
+.quit
+exit
+exit
+--HOST--
+apt install php7.4 php-sqlite
+ln /var/lib/docker/volumes/myVolume/_data/xkcd.db /var/www/html/xkcd.db
+nano /etc/php/7.4/php.ini
+--PDO SQLITE einkommentieren--
