@@ -31,7 +31,7 @@ Abschließend werden die Dateien in Pyspark verarbeitet und abgespeichert.
 
 ## Beschreibung des Downloads
 
-Der Download geschieht per Get-Request. Zunächst wird die Nummer des aktuellsten XKCD-Comics herausgefunden. Danach werden per Multiprocessing alle XKCD-Comics mit Hilfe der JSON-API heruntergeladen. Ausgelassen werden dabei die Comics "404", "1037" und "1331", da diese Zeichen beinhalten, die eine CSV-Formatierung durcheinander bringen. 
+Der Download geschieht per Get-Request. Zunächst wird die Nummer des aktuellsten XKCD-Comics herausgefunden. Danach werden per Multiprocessing alle XKCD-Comics mit Hilfe der JSON-API heruntergeladen. Ausgelassen werden dabei die Comics "404", "1037" und "1331", da diese Zeichen beinhalten, die eine CSV-Formatierung durcheinander bringen. Gespeichert werden alle Comics-JSONs nach Jahren partitioniert im HDFS.
 
 ## Beschreibung PySpark
 
