@@ -40,3 +40,7 @@ In PySpark werden zunächst alle heruntergeladenen Daten aus dem HDFS importiert
 ## Beschreibung Website
 
 Als Webserver wird Apache2 verwendet und für das Backend PHP. In PHP wird eine einfache SQL Query abgesetzt, deren Ergebnisse auf der Seite angezeigt werden. Für eine kleine Verschönerung wird Bootstrap eingebunden.
+
+## DDLs
+
+Es werden keine DDLs benötigt, da Pandas diese aus den JSONs selbst ableiten kann.
