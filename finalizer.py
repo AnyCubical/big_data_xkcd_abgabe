@@ -1,7 +1,6 @@
 import pyspark
 from pyspark.sql import SparkSession
 from pyspark import SparkContext
-import argparse
 from pyspark.sql.functions import desc
 import pandas
 import sqlite3
@@ -21,7 +20,7 @@ if __name__ == '__main__':
     xkcd.write.format('csv')\
         .mode('overwrite')\
         .option('path', '/user/hadoop/xkcd/final')\
-        .saveAsTable('default.xkcd_partitioned')\
+        .saveAsTable('default.xkcd_partitioniert')\
 
     df = xkcd.toPandas()
     
