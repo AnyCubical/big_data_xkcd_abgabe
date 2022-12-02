@@ -17,8 +17,7 @@ args = {
 
 def multi_downloader(i):
     if i != 404 and i != 1037 and i != 1331:
-        jfile = requests.get(f'https://xkcd.com/{i}/info.0.json')
-        jsonObj = jfile.json()
+        jsonObj = requests.get(f'https://xkcd.com/{i}/info.0.json').json()
 
         if (os.path.exists(f'/home/airflow/xkcd/raw/{jsonObj["year"]}')):
             Path(f'/home/airflow/xkcd/raw/{jsonObj["year"]}/{jsonObj["num"]}.json').write_text(json.dumps(jsonObj))
@@ -40,37 +39,37 @@ dag = DAG('xkcd', default_args=args, description='xkcd comics',
           start_date=datetime(2019, 10, 16), catchup=False, max_active_runs=1)
 
 create_placeholder = BashOperator(
-    task_id='create_placeholder',
+    task_id='create_placeholder_locally',
     bash_command='touch /home/airflow/xkcd/raw/placeholder',
     dag = dag
 )
 
 copy_hdfs_placeholder = BashOperator(
-    task_id='copy_hdfs_placeholder',
+    task_id='copy_placeholder_to_hdfs',
     bash_command='/home/airflow/hadoop/bin/hadoop fs -put /home/airflow/xkcd/raw/placeholder /user/hadoop/xkcd/raw',
     dag = dag
 )
 
 clear_xkcddata = BashOperator(
-    task_id='clear_xkcddata',
+    task_id='clear_xkcddata_locally',
     bash_command='rm -r /home/airflow/xkcd/raw/*',
     dag = dag
 )
 
 download_xkcd = PythonOperator(
-    task_id='download_xkcd',
+    task_id='download_xkcd_locally',
     python_callable=download_xkcd,
     dag = dag
 )
 
 clear_xkcddata_hdfs = BashOperator(
-    task_id='clear_xkcddata_hdfs',
+    task_id='clear_xkcddata_in_hdfs',
     bash_command='/home/airflow/hadoop/bin/hadoop dfs -rm -r /user/hadoop/xkcd/raw',
     dag = dag
 )
 
 push_xkcddata_hdfs = BashOperator(
-    task_id='push_xkcddata_hdfs',
+    task_id='push_xkcddata_to_hdfs',
     bash_command='/home/airflow/hadoop/bin/hadoop fs -put /home/airflow/xkcd /user/hadoop',
     dag = dag
 )
@@ -84,7 +83,6 @@ pyspark_raw_to_final = SparkSubmitOperator(
     executor_memory='2g',
     num_executors='2',
     name='spark_raw_to_final',
-    verbose=True,
     dag = dag
 )
 
