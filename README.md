@@ -21,6 +21,14 @@ Im ersten Schritt muss alle Pfade geleert werden. Um zu gewährleisten, dass die
 Nachdem der lokale Pfad geleert ist, werden alle XKCD-Comics lokal heruntergeladen. Danach können alle Dateien auf das HDFS kopiert werden.
 Abschließend werden die Dateien in Pyspark verarbeitet und abgespeichert.
 
+1. create_placeholder
+2. copy_hdfs_placeholder
+3. clear_xkcddata_hdfs
+4. clear_xkcd
+5. download_xkcd
+6. push_xkcddata_hdfs
+7. pyspark_raw_to_final
+
 ## Beschreibung des Downloads
 
 Der Download geschieht per Get-Request. Zunächst wird die Nummer des aktuellsten XKCD-Comics herausgefunden. Danach werden per Multiprocessing alle XKCD-Comics mit Hilfe der JSON-API heruntergeladen. Ausgelassen werden dabei die Comics "404", "1037" und "1331", da diese Zeichen beinhalten, die eine CSV-Formatierung durcheinander bringen. 
