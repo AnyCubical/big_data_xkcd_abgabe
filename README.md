@@ -21,12 +21,12 @@ Im ersten Schritt muss alle Pfade geleert werden. Um zu gewährleisten, dass die
 Nachdem der lokale Pfad geleert ist, werden alle XKCD-Comics lokal heruntergeladen. Danach können alle Dateien auf das HDFS kopiert werden.
 Abschließend werden die Dateien in Pyspark verarbeitet und abgespeichert.
 
-1. create_placeholder
-2. copy_hdfs_placeholder
-3. clear_xkcddata_hdfs
-4. clear_xkcd
-5. download_xkcd
-6. push_xkcddata_hdfs
+1. create_placeholder_locally
+2. copy_placeholder_to_hdfs
+3. clear_xkcddata_in_hdfs
+4. clear_xkcddata_locally
+5. download_xkcd_locally
+6. push_xkcddata_to_hdfs
 7. pyspark_raw_to_final
 
 ## Beschreibung des Downloads
